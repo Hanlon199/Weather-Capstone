@@ -31,3 +31,11 @@
     transform: rotate(360deg);
   }
 }
+
+.display-inline{
+  display: inline;
+}
+
+.clean-link:hover{
+  text-decoration: none;
+}
