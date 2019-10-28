@@ -2,7 +2,7 @@ import React from 'react';
 export default class Weather extends React.Component{
     render(){
         return(
-            <h1>Main HERE</h1>
+            <h1>Testing the service worker</h1>
         );
     }
 }
