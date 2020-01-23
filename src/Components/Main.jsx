@@ -34,12 +34,16 @@ export default class Main extends React.Component {
     return (
         <div className="App" style={{height:'100%'}}>
         <Nav />
-        <div className="row" style={{position:'fixed',width:'100%', height:'100%'}}>
-            <SideView legend={this.state.report} onReportChange={this.reportChange}/>
-            <div className="col-md-10" style={{backgroundImage: "./Assets/background_cloudy.jpg"}}>
+
+        <div className="currData">
             <CurrData/>
-            <DataView legend={this.state.report} />
-            </div>
+        </div>
+        <div className="graphList">
+          {
+            ['Temperature','Humidity','Rainfall','Air Quality','Barometric Pressure'].map((header, index)=>(
+              <DataView legend={header} />
+            ))
+          }
         </div>
 
         {/* <Button>Hello Bootstrap</Button> */}

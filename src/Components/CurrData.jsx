@@ -1,6 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import CardActions from '@material-ui/core/CardActions';
+import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import Modal from '@material-ui/core/Modal';
 import { FaTemperatureHigh } from 'react-icons/fa';
@@ -28,6 +34,23 @@ const useStyles = makeStyles(theme => ({
   chip: {
     margin: theme.spacing(0.5)
   },
+  card: {
+    minWidth: 20,
+    margin: 'auto',
+    marginTop: 10,
+    border: '2px solid #FFB81C'
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
   button: {
     marginTop: '20%',
     right: '30px'
@@ -44,6 +67,9 @@ const useStyles = makeStyles(theme => ({
     textShadow: '1px 1px black',
     boxShadow: '2px 2px 2px gray',
     color: 'white'
+  },
+  floatL:{
+    marginRight:'75%'
   },
   form: {
     marginTop: '20px'
@@ -110,7 +136,6 @@ export default function CurrData() {
   return (
     <Paper className={classes.root} style={paperStyle}>
       <Row>
-        <Col sm={11}>
           {chipData.map(data => {
             let icon;
 
@@ -143,17 +168,36 @@ export default function CurrData() {
 
             if (data.check !== false) {
               return (
-                <Chip
-                  key={data.key}
-                  icon={icon}
-                  label={data.label}
-                  // onDelete={handleDelete(data)}
-                  className={classes.chip}
-                />
+                //Now using card :)
+                <Card className={classes.card}>
+                   <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        {icon}
+                      </Avatar>
+                    }
+                    title={data.label}
+                    subheader="September 14, 2016"
+                  />
+                  <CardContent>
+                    <Typography variant="h5" component="h2">
+                    data goes here
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button className="floatL" size="small" data>?</Button>
+                  </CardActions>
+                </Card>
+                // <Chip
+                //   key={data.key}
+                //   icon={icon}
+                //   label={data.label}
+                //   // onDelete={handleDelete(data)}
+                //   className={classes.chip}
+                // />
               );
             }
           })}
-        </Col>
         <Col sm={1}>
           <Button
             variant="contained"

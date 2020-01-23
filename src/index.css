@@ -36,3 +36,7 @@ code {
 .legend_table{
   cursor: pointer;
 }
+
+.App{
+  background-color: #0C2340;
+}
