@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
@@ -9,6 +9,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import Modal from '@material-ui/core/Modal';
+import axios from 'axios';
+
 import { FaTemperatureHigh } from 'react-icons/fa';
 import { GiHeavyRain, GiDew, GiThermometerCold } from 'react-icons/gi';
 import {
@@ -35,10 +37,20 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(0.5)
   },
   card: {
-    minWidth: 20,
+    minWidth: 5,
     margin: 'auto',
     marginTop: 10,
-    border: '2px solid #FFB81C'
+    border: '2px solid #FFB81C',
+    padding: 0,
+    fontSize: 8
+  },
+  cardFilter: {
+    minWidth: 5,
+    margin: 'auto',
+    marginTop: 10,
+    backgroundColor: 'transparent',
+    padding: 0,
+    fontSize: 8
   },
   bullet: {
     display: 'inline-block',
@@ -46,14 +58,12 @@ const useStyles = makeStyles(theme => ({
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14,
+    fontSize: 8,
   },
   pos: {
     marginBottom: 12,
   },
   button: {
-    marginTop: '20%',
-    right: '30px'
   },
   modal: {
     display: 'flex',
@@ -86,28 +96,38 @@ const paperStyle = {
   marginBottom: '20px'
 };
 
+const cardStyle = {
+  padding: 5,
+}
+
+const valueFormat = {
+  textAlign: 'center',
+}
+
+
 // localStorage.getItem('myLocalStorage') ||
 
 export default function CurrData() {
+
   const classes = useStyles();
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: 'Temperature:', check: true },
-    { key: 1, label: 'Humidity:', check: true },
-    { key: 2, label: 'Rainfall:', check: true },
-    { key: 3, label: 'Air Quality:', check: true },
-    { key: 4, label: 'Barometric Pressure:', check: true },
-    { key: 5, label: 'Dew Point:', check: true },
-    { key: 6, label: 'Human Perception:', check: true },
-    { key: 7, label: 'UV Index:', check: true },
-    { key: 8, label: 'Snow Accumulation:', check: true },
-    { key: 9, label: 'Solar Radiation:', check: true },
-    { key: 10, label: 'Wind Speed:', check: true },
-    { key: 11, label: 'Wind Direction:', check: true },
-    { key: 12, label: 'Wind Chill:', check: true }
+  const [chipData, setChipData] = useState([
+    { key: 0, value:0, title:'AirTemp_C', label: 'Temperature:', check: true },
+    { key: 1, value:0, title:'RH', label: 'Humidity:', check: true },
+    { key: 2, value:0, title:'RainReset', label: 'Rainfall:', check: true },
+    { key: 3, value:0, title:'3', label: 'Air Quality:', check: true },
+    { key: 4, value:0, title:'Barometer_KPa', label: 'Barometric Pressure:', check: true },
+    { key: 5, value:0, title:'DewPoint', label: 'Dew Point:', check: true },
+    { key: 6, value:0, title:'6', label: 'Human Perception:', check: true },
+    { key: 7, value:0, title:'7', label: 'UV Index:', check: true },
+    { key: 8, value:0, title:'7', label: 'Snow Accumulation:', check: true },
+    { key: 9, value:0, title:'8', label: 'Solar Radiation:', check: true },
+    { key: 10, value:0, title:'WindSpeed_ms', label: 'Wind Speed:', check: true },
+    { key: 11, value:0, title:'WindDirect_deg', label: 'Wind Direction:', check: true },
+    { key: 12, value:0, title:'WindChill', label: 'Wind Chill:', check: true }
   ]);
 
   // save to localstorage
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem('myLocalStorage', chipData);
   }, [chipData]);
 
@@ -115,9 +135,27 @@ export default function CurrData() {
   // localStorage.myMap = JSON.stringify(Array.from(map.entries()));
   // const map = new Map(JSON.parse(localStorage.myMap));
 
+  const loadData = async (chips) => {
+    //UPDATES every 35 seconds, right now it is set to 5 for testing
+    let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
+    serverData = serverData['data']
+    // console.log("CHIPPYS: ", chips)
+    return chips.map(element=>{
+      element.value = serverData[element.title];
+      return {...element, value: element.value == undefined ? 0 : element.value}
+    });
+  }
+  // const [serverData, updateData] = useState(loadData(chipData));
+  useEffect(() => {
+    setTimeout(async () => {
+      setChipData(await loadData(chipData));
+    }, 5000);
+  });
+  
+
   const secondColStart = Math.floor(chipData.length / 2);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDelete = chipToDelete => () => {
     setChipData(chips => chips.filter(chip => chip.key !== chipToDelete.key));
@@ -131,26 +169,30 @@ export default function CurrData() {
     setOpen(false);
   };
 
-  
-
   return (
     <Paper className={classes.root} style={paperStyle}>
       <Row>
           {chipData.map(data => {
+            console.log("DATA: ", data)
             let icon;
-
+            let valKey;
             if (data.label === 'Temperature:') {
               icon = <FaTemperatureHigh />;
+              valKey = 'AirTemp_C';
             } else if (data.label === 'Humidity:') {
               icon = <WiHumidity />;
+              valKey = 'RH';
             } else if (data.label === 'Rainfall:') {
               icon = <GiHeavyRain />;
+              valKey = 'RainReset';
             } else if (data.label === 'Air Quality:') {
               icon = <WiWindy />;
             } else if (data.label === 'Barometric Pressure:') {
               icon = <WiBarometer />;
+              valKey = 'Barometer_KPa';
             } else if (data.label === 'Dew Point:') {
               icon = <GiDew />;
+              valKey = 'DewPoint';
             } else if (data.label === 'Human Perception:') {
             } else if (data.label === 'UV Index:') {
               icon = <WiHot />;
@@ -160,17 +202,20 @@ export default function CurrData() {
               icon = <WiDaySunny />;
             } else if (data.label === 'Wind Speed:') {
               icon = <WiStrongWind />;
+              valKey = 'WindSpeed_ms';
             } else if (data.label === 'Wind Direction:') {
               icon = <WiWindDeg />;
+              valKey = 'WindDirect_deg';
             } else if (data.label === 'Wind Chill:') {
               icon = <GiThermometerCold />;
+              valKey = 'WindChill';
             }
 
             if (data.check !== false) {
               return (
                 //Now using card :)
-                <Card className={classes.card}>
-                   <CardHeader
+                <Card className={classes.card} key={data.key}>
+                   <CardHeader style={cardStyle}
                     avatar={
                       <Avatar aria-label="recipe" className={classes.avatar}>
                         {icon}
@@ -179,13 +224,13 @@ export default function CurrData() {
                     title={data.label}
                     subheader="September 14, 2016"
                   />
-                  <CardContent>
-                    <Typography variant="h5" component="h2">
-                    data goes here
+                  <CardContent style={cardStyle}>
+                    <Typography variant="h5" component="h5" style={valueFormat}>
+                      {data.value}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Button className="floatL" size="small" data>?</Button>
+                  <CardActions style={cardStyle}>
+                    <Button className="floatL" size="small">?</Button>
                   </CardActions>
                 </Card>
                 // <Chip
@@ -198,7 +243,9 @@ export default function CurrData() {
               );
             }
           })}
-        <Col sm={1}>
+
+        <Card className={classes.cardFilter}>
+          <CardActions>
           <Button
             variant="contained"
             className={classes.button}
@@ -206,7 +253,8 @@ export default function CurrData() {
           >
             Filter
           </Button>
-        </Col>
+          </CardActions>
+        </Card>
       </Row>
       <Modal open={open} onClose={handleClose} className={classes.modal}>
         <div>
@@ -260,7 +308,7 @@ export default function CurrData() {
                           } else {
                             chipData[data.key].check = false;
                           }
-                          console.log('CHIP:', chipData);
+                          // console.log('CHIP:', chipData);
                         }}
                       />
                     </div>

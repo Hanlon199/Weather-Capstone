@@ -41,7 +41,7 @@ export default class Main extends React.Component {
         <div className="graphList">
           {
             ['Temperature','Humidity','Rainfall','Air Quality','Barometric Pressure'].map((header, index)=>(
-              <DataView legend={header} />
+              <DataView legend={header} key={index}/>
             ))
           }
         </div>

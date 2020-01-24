@@ -9,7 +9,7 @@ export default class GraphController extends Component{
     
     render() {
         let report = this.props.report;
-        console.log("GRAPH CONTROLLER:", report)
+        // console.log("GRAPH CONTROLLER:", report)
 
         if (report === 'Temperature') {
             return <Temperature></Temperature>

@@ -34,6 +34,8 @@ class Temperature extends Component {
     };
   }
 
+  //loading data for each graph should not query the sensors but rather grab from the db
+  // query sensors for most recent data
   loadData = async () => {
     console.log("LOADING DATA")
     // this.state.series.data = await axios.get(`/api/main/test`);
@@ -42,7 +44,7 @@ class Temperature extends Component {
 
 
   render() {
-    this.loadData()
+    // this.loadData()
     return (
       <Body className="app">
         <div className="row">
