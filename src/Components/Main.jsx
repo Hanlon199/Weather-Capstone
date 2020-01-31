@@ -5,11 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import CurrData from "../Components/CurrData";
 import DataView from "../Components/DataView";
 import Nav from "../Components/Nav";
-import SideView from "../Components/SideView";
+import LandingMap from "../Components/subComponent/LandingMap";
+// import SideView from "../Components/SideView";
 
 export default class Main extends React.Component {
   state = {
-    report:'Temperature'
+    report:'Temperature',
+    sensor: null,
   };
 
   
@@ -21,33 +23,35 @@ export default class Main extends React.Component {
 
   //using fat arrow function is cleaner way to create event handlers without constructor
   reportChange = (newReport) => {
-    console.log("REPORT CHANGED: ", newReport);
-    this.setState({report:newReport},
-        ()=>{
-          console.log(this.state.report)
+    this.setState({report:newReport},()=>{});
+  }
 
-        }
-      );
+  sensorSelect = (newSensor) => {
+    this.setState({sensor:newSensor}, ()=>{console.log("SENSOR CHANGED: ", this.state.sensor)})
   }
   
   render() {
     return (
         <div className="App" style={{height:'100%'}}>
         <Nav />
+        {/* <SideView legend={this.state.report} onReportChange={this.reportChange}/> */}
+        {/* <div>
+          <LandingMap onSelectSensor={this.sensorSelect}></LandingMap>
+        </div> */}
 
-        <div className="currData">
-            <CurrData/>
-        </div>
-        <div className="graphList">
-          {
-            ['Temperature','Humidity','Rainfall','Air Quality','Barometric Pressure'].map((header, index)=>(
-              <DataView legend={header} key={index}/>
-            ))
-          }
+        <div>
+          <div className="currData">
+              <CurrData/>
+          </div>
+          <div className="graphList">
+            {
+              ['Temperature','Humidity','Rainfall','Air Quality','Barometric Pressure'].map((header, index)=>(
+                <DataView legend={header} key={index}/>
+              ))
+            }
+          </div>
         </div>
 
-        {/* <Button>Hello Bootstrap</Button> */}
-        {/* <Button1>Hello Styled-Components</Button1> Need to create the Button1 component above ^*/}{" "}
         </div>
     );
   }

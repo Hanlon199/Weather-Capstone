@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
+// import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -142,7 +142,7 @@ export default function CurrData() {
     // console.log("CHIPPYS: ", chips)
     return chips.map(element=>{
       element.value = serverData[element.title];
-      return {...element, value: element.value == undefined ? 0 : element.value}
+      return {...element, value: element.value === undefined ? 0 : element.value}
     });
   }
   // const [serverData, updateData] = useState(loadData(chipData));
@@ -173,27 +173,21 @@ export default function CurrData() {
     <Paper className={classes.root} style={paperStyle}>
       <Row>
           {chipData.map(data => {
-            console.log("DATA: ", data)
             let icon;
-            let valKey;
             if (data.label === 'Temperature:') {
               icon = <FaTemperatureHigh />;
-              valKey = 'AirTemp_C';
             } else if (data.label === 'Humidity:') {
               icon = <WiHumidity />;
-              valKey = 'RH';
             } else if (data.label === 'Rainfall:') {
               icon = <GiHeavyRain />;
-              valKey = 'RainReset';
             } else if (data.label === 'Air Quality:') {
               icon = <WiWindy />;
             } else if (data.label === 'Barometric Pressure:') {
               icon = <WiBarometer />;
-              valKey = 'Barometer_KPa';
             } else if (data.label === 'Dew Point:') {
               icon = <GiDew />;
-              valKey = 'DewPoint';
             } else if (data.label === 'Human Perception:') {
+
             } else if (data.label === 'UV Index:') {
               icon = <WiHot />;
             } else if (data.label === 'Snow Accumulation:') {
@@ -202,13 +196,10 @@ export default function CurrData() {
               icon = <WiDaySunny />;
             } else if (data.label === 'Wind Speed:') {
               icon = <WiStrongWind />;
-              valKey = 'WindSpeed_ms';
             } else if (data.label === 'Wind Direction:') {
               icon = <WiWindDeg />;
-              valKey = 'WindDirect_deg';
             } else if (data.label === 'Wind Chill:') {
               icon = <GiThermometerCold />;
-              valKey = 'WindChill';
             }
 
             if (data.check !== false) {
