@@ -11,6 +11,11 @@ const color = {
   color: 'white',
   textDecoration: 'none'
 };
+const cleanLink = {
+  cursor: 'pointer',
+  color: 'white',
+  marginLeft: 20,
+};
 
 const selectStyle = {
   input: () => ({
@@ -26,7 +31,7 @@ export default class Navigation extends React.Component {
     this.state = {
       selectedOption: null,
       locations: [
-        { value: 'hamden', label: 'Hamden' },
+        // { value: 'hamden', label: 'Hamden' },
         { value: 'qu main campus', label: 'QU Main Campus' },
         { value: 'qu york hill campus', label: 'QU York Hill Campus' },
         { value: 'new haven', label: 'New Haven' },
@@ -39,6 +44,10 @@ export default class Navigation extends React.Component {
       { selectedOption },
       () => console.log(`Option selected:`, this.state.selectedOption)
     );
+  }
+
+  handlePageChange = ()=>{
+    this.props.onPageChange('about');
   }
 
   render() {
@@ -59,6 +68,9 @@ export default class Navigation extends React.Component {
             options={this.state.locations}
             styles={selectStyle}
           />
+          <a className="clean-link" onClick={this.handlePageChange} value={'about'} style={color, cleanLink}>
+              About
+          </a>
         </Navbar>
       </div>
     );
