@@ -2,15 +2,18 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const HTMLParser = require('node-html-parser');
+const assert = require('assert');
 
 router
-    .get('/test', async(req,res)=>{
+    .get('/test', async (req, res) => {
         console.log("SERVER CONNECTED!");
-        res.json({data:"success"});
+        res.json({
+            data: "success"
+        });
     })
-    .get('/load-all/:location', async(req,res)=>{
+    .get('/load-all/:location', async (req, res) => {
         let data = {};
-        if(req.params.location == 'mount_carmel'){
+        if (req.params.location == 'mount_carmel') {
             try {
                 // await axios.get(`http://10.181.160.100/get_public_tbl.cgi?A=1`)
                 await axios.get(`http://10.181.160.100/index.shtml`)
@@ -31,7 +34,7 @@ router
                                 if (i != 36) {
                                     data[th] = td;
                                 }
-                            }   
+                            }
                         }
                     })
             } catch (error) {
@@ -39,10 +42,25 @@ router
             }
             console.log('DATA:', data)
             res.json(data)
-        }else{
-            res.json({data:false})
+        } else {
+            res.json({
+                data: false
+            })
         }
         // let db = require('')
     });
+// .get('/get-data', (req, res, next) => {
+
+// })
+// .post('/insert', (req, res, next) => {
+//     var data = {}
+// })
+// .post('/update', (req, res, next) => {
+
+// })
+// .post('/delete', (req, res, next) {
+
+// });
+
 
 module.exports = router;

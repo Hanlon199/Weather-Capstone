@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 // import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
@@ -78,8 +78,8 @@ const useStyles = makeStyles(theme => ({
     boxShadow: '2px 2px 2px gray',
     color: 'white'
   },
-  floatL:{
-    marginRight:'75%'
+  floatL: {
+    marginRight: '75%'
   },
   form: {
     marginTop: '20px'
@@ -111,19 +111,19 @@ export default function CurrData() {
 
   const classes = useStyles();
   const [chipData, setChipData] = useState([
-    { key: 0, value:0, title:'AirTemp_C', label: 'Temperature:', check: true },
-    { key: 1, value:0, title:'RH', label: 'Humidity:', check: true },
-    { key: 2, value:0, title:'RainReset', label: 'Rainfall:', check: true },
-    { key: 3, value:0, title:'3', label: 'Air Quality:', check: true },
-    { key: 4, value:0, title:'Barometer_KPa', label: 'Barometric Pressure:', check: true },
-    { key: 5, value:0, title:'DewPoint', label: 'Dew Point:', check: true },
-    { key: 6, value:0, title:'6', label: 'Human Perception:', check: true },
-    { key: 7, value:0, title:'7', label: 'UV Index:', check: true },
-    { key: 8, value:0, title:'7', label: 'Snow Accumulation:', check: true },
-    { key: 9, value:0, title:'8', label: 'Solar Radiation:', check: true },
-    { key: 10, value:0, title:'WindSpeed_ms', label: 'Wind Speed:', check: true },
-    { key: 11, value:0, title:'WindDirect_deg', label: 'Wind Direction:', check: true },
-    { key: 12, value:0, title:'WindChill', label: 'Wind Chill:', check: true }
+    { key: 0, value: 0, title: 'AirTemp_C', label: 'Temperature:', check: true },
+    { key: 1, value: 0, title: 'RH', label: 'Humidity:', check: true },
+    { key: 2, value: 0, title: 'RainReset', label: 'Rainfall:', check: true },
+    { key: 3, value: 0, title: '3', label: 'Air Quality:', check: true },
+    { key: 4, value: 0, title: 'Barometer_KPa', label: 'Barometric Pressure:', check: true },
+    { key: 5, value: 0, title: 'DewPoint', label: 'Dew Point:', check: true },
+    { key: 6, value: 0, title: '6', label: 'Human Perception:', check: true },
+    { key: 7, value: 0, title: '7', label: 'UV Index:', check: true },
+    { key: 8, value: 0, title: '7', label: 'Snow Accumulation:', check: true },
+    { key: 9, value: 0, title: '8', label: 'Solar Radiation:', check: true },
+    { key: 10, value: 0, title: 'WindSpeed_ms', label: 'Wind Speed:', check: true },
+    { key: 11, value: 0, title: 'WindDirect_deg', label: 'Wind Direction:', check: true },
+    { key: 12, value: 0, title: 'WindChill', label: 'Wind Chill:', check: true }
   ]);
 
   // save to localstorage
@@ -140,9 +140,9 @@ export default function CurrData() {
     let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
     serverData = serverData['data']
     // console.log("CHIPPYS: ", chips)
-    return chips.map(element=>{
+    return chips.map(element => {
       element.value = serverData[element.title];
-      return {...element, value: element.value === undefined ? 0 : element.value}
+      return { ...element, value: element.value === undefined ? 0 : element.value }
     });
   }
   // const [serverData, updateData] = useState(loadData(chipData));
@@ -151,7 +151,7 @@ export default function CurrData() {
       setChipData(await loadData(chipData));
     }, 5000);
   });
-  
+
 
   const secondColStart = Math.floor(chipData.length / 2);
 
@@ -172,77 +172,77 @@ export default function CurrData() {
   return (
     <Paper className={classes.root} style={paperStyle}>
       <Row>
-          {chipData.map(data => {
-            let icon;
-            if (data.label === 'Temperature:') {
-              icon = <FaTemperatureHigh />;
-            } else if (data.label === 'Humidity:') {
-              icon = <WiHumidity />;
-            } else if (data.label === 'Rainfall:') {
-              icon = <GiHeavyRain />;
-            } else if (data.label === 'Air Quality:') {
-              icon = <WiWindy />;
-            } else if (data.label === 'Barometric Pressure:') {
-              icon = <WiBarometer />;
-            } else if (data.label === 'Dew Point:') {
-              icon = <GiDew />;
-            } else if (data.label === 'Human Perception:') {
+        {chipData.map(data => {
+          let icon;
+          if (data.label === 'Temperature:') {
+            icon = <FaTemperatureHigh />;
+          } else if (data.label === 'Humidity:') {
+            icon = <WiHumidity />;
+          } else if (data.label === 'Rainfall:') {
+            icon = <GiHeavyRain />;
+          } else if (data.label === 'Air Quality:') {
+            icon = <WiWindy />;
+          } else if (data.label === 'Barometric Pressure:') {
+            icon = <WiBarometer />;
+          } else if (data.label === 'Dew Point:') {
+            icon = <GiDew />;
+          } else if (data.label === 'Human Perception:') {
 
-            } else if (data.label === 'UV Index:') {
-              icon = <WiHot />;
-            } else if (data.label === 'Snow Accumulation:') {
-              icon = <WiSnow />;
-            } else if (data.label === 'Solar Radiation:') {
-              icon = <WiDaySunny />;
-            } else if (data.label === 'Wind Speed:') {
-              icon = <WiStrongWind />;
-            } else if (data.label === 'Wind Direction:') {
-              icon = <WiWindDeg />;
-            } else if (data.label === 'Wind Chill:') {
-              icon = <GiThermometerCold />;
-            }
+          } else if (data.label === 'UV Index:') {
+            icon = <WiHot />;
+          } else if (data.label === 'Snow Accumulation:') {
+            icon = <WiSnow />;
+          } else if (data.label === 'Solar Radiation:') {
+            icon = <WiDaySunny />;
+          } else if (data.label === 'Wind Speed:') {
+            icon = <WiStrongWind />;
+          } else if (data.label === 'Wind Direction:') {
+            icon = <WiWindDeg />;
+          } else if (data.label === 'Wind Chill:') {
+            icon = <GiThermometerCold />;
+          }
 
-            if (data.check !== false) {
-              return (
-                //Now using card :)
-                <Card className={classes.card} key={data.key}>
-                   <CardHeader style={cardStyle}
-                    avatar={
-                      <Avatar aria-label="recipe" className={classes.avatar}>
-                        {icon}
-                      </Avatar>
-                    }
-                    title={data.label}
-                    subheader="September 14, 2016"
-                  />
-                  <CardContent style={cardStyle}>
-                    <Typography variant="h5" component="h5" style={valueFormat}>
-                      {data.value}
-                    </Typography>
-                  </CardContent>
-                  <CardActions style={cardStyle}>
-                    <Button className="floatL" size="small">?</Button>
-                  </CardActions>
-                </Card>
-                // <Chip
-                //   key={data.key}
-                //   icon={icon}
-                //   label={data.label}
-                //   // onDelete={handleDelete(data)}
-                //   className={classes.chip}
-                // />
-              );
-            }
-          })}
+          if (data.check !== false) {
+            return (
+              //Now using card :)
+              <Card className={classes.card} key={data.key}>
+                <CardHeader style={cardStyle}
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      {icon}
+                    </Avatar>
+                  }
+                  title={data.label}
+                  subheader="September 14, 2016"
+                />
+                <CardContent style={cardStyle}>
+                  <Typography variant="h5" component="h5" style={valueFormat}>
+                    {data.value}
+                  </Typography>
+                </CardContent>
+                <CardActions style={cardStyle}>
+                  <Button className="floatL" size="small">?</Button>
+                </CardActions>
+              </Card>
+              // <Chip
+              //   key={data.key}
+              //   icon={icon}
+              //   label={data.label}
+              //   // onDelete={handleDelete(data)}
+              //   className={classes.chip}
+              // />
+            );
+          }
+        })}
 
         <Card className={classes.cardFilter}>
           <CardActions>
-          <Button
-            variant="contained"
-            className={classes.button}
-            onClick={handleOpen}
-          >
-            Filter
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={handleOpen}
+            >
+              Filter
           </Button>
           </CardActions>
         </Card>
