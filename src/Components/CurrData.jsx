@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 // import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
@@ -74,9 +74,9 @@ export default function CurrData() {
     let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
     serverData = serverData['data']
     // console.log("CHIPPYS: ", chips)
-    return chips.map(element=>{
+    return chips.map(element => {
       element.value = serverData[element.title];
-      return {...element, value: element.value === undefined ? 0 : element.value}
+      return { ...element, value: element.value === undefined ? 0 : element.value }
     });
   }
   // const [serverData, updateData] = useState(loadData(chipData));

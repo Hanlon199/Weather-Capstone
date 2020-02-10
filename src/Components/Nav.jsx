@@ -46,7 +46,7 @@ export default class Navigation extends React.Component {
     );
   }
 
-  handlePageChange = ()=>{
+  handlePageChange = () => {
     this.props.onPageChange('about');
   }
 
@@ -61,7 +61,6 @@ export default class Navigation extends React.Component {
             </a>
           </Brand>
           <Select
-            isMulti
             components={animatedComponents}
             value={selectedOption}
             onChange={this.handleChange}
@@ -69,7 +68,7 @@ export default class Navigation extends React.Component {
             styles={selectStyle}
           />
           <a className="clean-link" onClick={this.handlePageChange} value={'about'} style={color, cleanLink}>
-              About
+            About
           </a>
         </Navbar>
       </div>
