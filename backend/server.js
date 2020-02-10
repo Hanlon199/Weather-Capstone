@@ -13,6 +13,7 @@ const index = require('./routes/index');
 const mcRoutes = require('./routes/mc.route');
 const yhRoutes = require('./routes/yh.route')
 
+app.use(bodyParser.json());
 /*
     .use(
         '/api',
@@ -31,8 +32,8 @@ app
     }))
     .use(bodyParser.json())
     .use('/api', index)
-    .use('/api/MC', mcRoutes)
-    .use('/api/YH', yhRoutes)
+    .use('/api', mcRoutes)
+    // .use('/api/YH', yhRoutes)
     .get('*', (req, res) => res.status(404).json({
         error: true,
         result: 'Route not found'
