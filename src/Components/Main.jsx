@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import CurrData from "../Components/CurrData";
 import DataView from "../Components/DataView";
 import Nav from "../Components/Nav";
-import LandingMap from "../Components/subComponent/LandingMap";
+// import LandingMap from "../Components/subComponent/LandingMap";
 import About from './about';
 // import SideView from "../Components/SideView";
 
@@ -39,7 +39,7 @@ export default class Main extends React.Component {
   render() {
     let page;
     //render main page
-    if(this.state.page == 'main'){
+    if(this.state.page === 'main'){
       page = <div>
       <div className="currData">
           <CurrData/>
