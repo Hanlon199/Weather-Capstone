@@ -123,24 +123,19 @@ export default function CurrData() {
     const data = props.data;
     const title = props.title;
     const type = props.type;
+    const conversionType = props.conversionType;
     if (title === 'Wind Direction:') {
-      return <WindDirection windDir={data}/>
+      return <div><WindDirection windDir={data}/> ({data}°)</div>
     }else if(title == 'Human Perception:'){
       return <HumanPercConv value={data}/>
     }else if(title == 'UV Index:'){
       return <UVConversion value={data}/>
     }else if(title == 'Air Quality:'){
+      //TODO, figure out if air quality it still going to be used
       return <UVConversion value={data}/>
     }
 
-    if (type === 'imperial') {
-      console.log('emperors new groove')
-      return <span>{data}</span>
-    }else if(type === 'metric'){
-      console.log('shes my queeeeen')
-      return <span>{data}</span>
-    }
-    //conversion data and conditions here
+    return <span>{utils.ConvertData(data,conversionType,type)}</span>
   }
 
   function UnitDisplayed(props){
@@ -194,16 +189,16 @@ export default function CurrData() {
                 <Card className={classes.card} key={data.key}>
                    <CardHeader style={StyleSheet['cardStyle']}
                     avatar={
-                      <Avatar aria-label="recipe" className={classes.avatar}>
+                      <Avatar aria-label="icon" className={classes.avatar}>
                         {icon}
                       </Avatar>
                     }
                     title={data.label}
-                    subheader={'date goes here just check for last pull in data...'}
+                    subheader={'check ntwrk for time...'}
                   />
                   <CardContent style={StyleSheet['cardStyle']}>
                     <Typography variant="h5" component="h5" style={StyleSheet['valueFormat']}>
-                      <DataConversion data={data.value} type={unitType} title={data.label} /> <UnitDisplayed  data={data} type={unitType} />
+                      <DataConversion data={data.value} type={unitType} title={data.label} conversionType={data.conversionType}/> <UnitDisplayed  data={data} type={unitType} />
                     </Typography>
                   </CardContent>
                   <CardActions style={StyleSheet['cardStyle']}>

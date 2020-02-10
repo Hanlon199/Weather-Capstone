@@ -3,6 +3,8 @@ export const useStyleData = {
       display: 'flex',
       justifyContent: 'center',
       flexWrap: 'wrap',
+      paddingLeft: 10,
+      paddingRight: 10,
       // padding: spacing(0.5)
     },
     chip: {
@@ -13,7 +15,7 @@ export const useStyleData = {
       margin: 'auto',
       marginTop: 10,
       border: '2px solid #FFB81C',
-      padding: 0,
+      padding: 5,
       fontSize: 8
     },
     cardFilter: {
