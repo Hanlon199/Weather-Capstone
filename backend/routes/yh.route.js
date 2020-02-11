@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+const axios = require('axios');
 const express = require('express');
 const mongo = require('mongodb');
 const assert = require('assert');
@@ -21,7 +20,7 @@ router.get('/get-data', (req, res, next) => {
       })
     }, 5000)
   })
-  .post('/insert', (req, res, next) => {
+  .post('/insert', async (req, res, next) => {
     let serverData = await axios.get(`/api/main/load-all/york_hill`);
 
     mongo.connect(url, (err, db) => {
@@ -33,3 +32,5 @@ router.get('/get-data', (req, res, next) => {
       })
     })
   });
+
+module.exports = router;

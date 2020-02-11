@@ -1,7 +1,7 @@
 const express = require('express');
-const routeManger = express.Router();
+const routeManager = express.Router();
 
-routeManger
-    .use('/main', require('./main'))
+routeManager
+    .use('/main', require('./main'));
 
-module.exports = routeManger;
+module.exports = routeManager;

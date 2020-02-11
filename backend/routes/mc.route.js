@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 
 const express = require('express');
 const mongo = require('mongodb');
@@ -21,7 +21,7 @@ router.get('/get-data', (req, res, next) => {
       })
     }, 5000)
   })
-  .post('/insert', (req, res, next) => {
+  .post('/insert', async (req, res, next) => {
     let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
 
     mongo.connect(url, (err, db) => {
@@ -33,3 +33,5 @@ router.get('/get-data', (req, res, next) => {
       })
     })
   });
+
+  module.exports = router;
