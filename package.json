@@ -13,6 +13,7 @@
     "http-proxy-middleware": "^0.20.0",
     "https": "^1.0.0",
     "mongodb": "^3.5.2",
+    "mongoose": "^5.8.11",
     "node-html-parser": "^1.1.16",
     "nodemon": "^1.19.4",
     "react": "^16.11.0",

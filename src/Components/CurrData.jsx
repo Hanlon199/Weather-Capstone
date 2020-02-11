@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => (
 ));
 
 export default function CurrData() {
-
+  const [timeStamp, updateTime] = useState('');
   const classes = useStyles();
   const [chipData, setChipData] = useState([
     { key: 0, value:0, title:'AirTemp_C', label: 'Temperature:', check: true, link: 'https://en.wikipedia.org/wiki/Air_temperature', metricUnit: '°C', imperialUnit:'°F', conversionType:'temperature' },
@@ -73,6 +73,7 @@ export default function CurrData() {
     //UPDATES every 35 seconds, right now it is set to 5 for testing
     let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
     serverData = serverData['data']
+    updateTime(serverData['Time Stamp']);
     // console.log("CHIPPYS: ", chips)
     return chips.map(element => {
       element.value = serverData[element.title];
@@ -194,7 +195,7 @@ export default function CurrData() {
                       </Avatar>
                     }
                     title={data.label}
-                    subheader={'check ntwrk for time...'}
+                    subheader={timeStamp}
                   />
                   <CardContent style={StyleSheet['cardStyle']}>
                     <Typography variant="h5" component="h5" style={StyleSheet['valueFormat']}>
