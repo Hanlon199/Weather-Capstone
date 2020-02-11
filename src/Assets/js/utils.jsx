@@ -94,6 +94,12 @@ export function ConvertData(value, conversionType, unitType){
                 }else{
                     return msToMph(value);
                 }
+            case 'dew':
+                if (unitType === 'metric') {
+                    return value;
+                } else {
+                    return celsiusToFar(value);
+                }
             default:
                 break;
         } 
