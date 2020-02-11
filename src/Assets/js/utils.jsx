@@ -58,19 +58,21 @@ export function ConvertData(value, conversionType, unitType){
         switch (conversionType) {
             case 'temperature':
                 if (unitType === 'metric') {
-                    return farToCelsius(value);
+                    return value;
                 }else{
                     return celsiusToFar(value);
                 }
             case 'container':
                 if (unitType === 'metric') {
-                    return lM2TokgM2(value);
+                    // return lM2TokgM2(value);
+                    return value;
                 }else{
                     return kgM2ToLM2(value);
                 }
             case 'pressure':
                 if (unitType === 'metric') {
-                    return inHgToKpa(value);
+                    // return inHgToKpa(value);
+                    return value;
                 }else{
                     return kPaToInHG(value);
                 }
