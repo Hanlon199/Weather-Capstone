@@ -108,7 +108,7 @@ export default function CurrData() {
       link: 'https://en.wikipedia.org/wiki/Dew_point',
       metricUnit: '°C',
       imperialUnit: '°F',
-      conversionType: 'dew'
+      conversionType: 'temperature'
     },
     {
       key: 6,
