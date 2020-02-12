@@ -40,7 +40,9 @@ const useStyles = makeStyles(theme => (
   useStyleData
 ));
 
+
 export default function CurrData() {
+  const [init, setInit] = useState(true);
   const [timeStamp, updateTime] = useState('');
   const classes = useStyles();
   const [chipData, setChipData] = useState([
@@ -49,7 +51,7 @@ export default function CurrData() {
     { key: 2, value:0, title:'RainReset', label: 'Rainfall:', check: true, link:'https://en.wikipedia.org/wiki/Precipitation', metricUnit: 'L/m2', imperialUnit: 'kg/m2' , conversionType:'container'},
     // { key: 3, value:0, title:'3', label: 'Air Quality:', check: true, link:'https://en.wikipedia.org/wiki/Air_quality_index', unit: 'low'},
     { key: 4, value:0, title:'Barometer_KPa', label: 'Barometric Pressure:', check: true, link:'https://en.wikipedia.org/wiki/Atmospheric_pressure', metricUnit: 'kPa', imperialUnit: 'in Hg', conversionType:'pressure'  },
-    { key: 5, value:0, title:'DewPoint', label: 'Dew Point:', check: true, link:'https://en.wikipedia.org/wiki/Dew_point', metricUnit: '°C', imperialUnit: '°F'  },
+    { key: 5, value:0, title:'DewPoint', label: 'Dew Point:', check: true, link:'https://en.wikipedia.org/wiki/Dew_point', metricUnit: '°C', imperialUnit: '°F',  conversionType:'temperature'},
     { key: 6, value:0, title:'6', label: 'Human Perception:', check: true, link:'https://en.wikipedia.org/wiki/Dew_point#Relationship_to_human_comfort', unit: humanPercInd  },
     { key: 7, value:0, title:'7', label: 'UV Index:', check: true, link:'https://en.wikipedia.org/wiki/Ultraviolet_index', unit: uvIndexes  },
     { key: 8, value:0, title:'7', label: 'Snow Accumulation:', check: true, link:'https://en.wikipedia.org/wiki/Snow', metricUnit: 'mm', imperialUnit: 'in', conversionType:'length' },
@@ -82,9 +84,11 @@ export default function CurrData() {
   }
   // const [serverData, updateData] = useState(loadData(chipData));
   useEffect(() => {
+    let timeout = init == true ? 0 : 20000;
     setTimeout(async () => {
       setChipData(await loadData(chipData));
-    }, 5000);
+    }, timeout);
+    setInit(false);
   });
 
   const loadUnit = localStorage['unitType'] !== undefined ? localStorage['unitType'] : 'imperial'
