@@ -16,15 +16,18 @@ let db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection.error'));
 db.on('open', function () {
-  console.log('Connected to database')
+  console.log('Connected to database');
 });
 
-router.get('/get-data', (req, res, next) => {
-    MCDataSchema.find().then((data) => {
-      res.json(data);
-    }).catch(err => {
-      console.log(err);
-    })
+router
+  .get('/get-data', (req, res, next) => {
+    MCDataSchema.find()
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
     // res.send('getdata');
     // setTimeout(async () => {
     //   mongo.connect(url, (req, res, next) => {
@@ -35,50 +38,81 @@ router.get('/get-data', (req, res, next) => {
     //       resultArray.push(doc);
     //     }, () => {
     //       db.close();
-    //       // render the data to the graphs below perhaps                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ,,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    //       // render the data to the graphs below perhaps                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ,,
     //     })
     //   })
     // }, 5000)
   })
-  .post('/insert', async (req, res, next) => {
-    let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
+  // .post('/insert', async (req, res, next) => {
+  //   try {
+  //     let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
 
-    mongo.connect(url, (err, db) => {
-      assert.equal(null, err);
-      db.collection('mountcarmel').insertOne(serverData, function (err) {
-        assert.equal(null, err);
-        console.log('item inserted');
-        db.close();
-      })
-    })
-  });
-  // .post('/insert', (req, res, next) => {
-  //   let mcDataObj = req.body;
-  //   MCDataSchema.create(mcDataObj, (err, mcData) => {
-  //     if (err) {
-  //       console.log(err);
-  //       res.sendStatus(500);
-  //     }
-  //     res.sendStatus(201);
-  //   })
-    // res.send('insertdata');
-    // let serverData = axios.get(`/api/main/load-all/mount_carmel`); 
-    // setTimeout(async () => {
-    //   mongo.connect(url, (err, db) => {
-    //     assert.equal(null, err);
-    //     var serverData = loadData();
-    //     console.log("serverData", serverData);
-    //     db.collection('mountcarmel').insertOne(serverData, function (err) {
-    //       assert.equal(null, err);
-    //       console.log('item inserted');
-    //       db.close();
-    //     })
-    //   })
-    // }, 5000)
+  //     mongo.connect(url, (err, db) => {
+  //       assert.equal(null, err);
+  //       db.collection('mountcarmel').insertOne(serverData, function (err) {
+  //         assert.equal(null, err);
+  //         console.log('item inserted');
+  //         db.close();
+  //       })
+  //     })
+  //   } catch (err) {
+  //     next(err);
+  //   }
   // });
+  // .post('/insert', async (req, res, next) => {
+  //   try {
+  //     // let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
+  //     let mcDataObj = req.body;
+  //     MCDataSchema.create(mcDataObj, (err, mcData) => {
+  //       if (err) {
+  //         console.log(err);
+  //         res.sendStatus(500);
+  //       }
+  //       res.sendStatus(201)
+  //     });
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // });
+  .post('/insert', (req, res, next) => {
+    // let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
+    let mcDataObj = req.body;
+    MCDataSchema.create(mcDataObj, (err, mcData) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+      }
+      res.sendStatus(201)
+    });
+  });
+// let serverData = await axios.get(`/api/main/load-all/mount_carmel`);
+
+// // let mcDataObj = req.body;
+// MCDataSchema.create(serverData, (err, mcData) => {
+//   if (err) {
+//     console.log(err);
+//     res.sendStatus(500);
+//   }
+//   res.sendStatus(201);
+
+// res.send('insertdata');
+// let serverData = axios.get(`/api/main/load-all/mount_carmel`);
+// setTimeout(async () => {
+//   mongo.connect(url, (err, db) => {
+//     assert.equal(null, err);
+//     var serverData = loadData();
+//     console.log('serverData', serverData);
+//     db.collection('mountcarmel').insertOne(serverData, function(err) {
+//       assert.equal(null, err);
+//       console.log('item inserted');
+//       db.close();
+//     });
+//   });
+// }, 5000);
+// });
 
 const loadData = async () => {
-  return serverData = axios.get(`/api/main/load-all/mount_carmel`);
-}
+  return (serverData = axios.get(`/api/main/load-all/mount_carmel`));
+};
 
 module.exports = router;
