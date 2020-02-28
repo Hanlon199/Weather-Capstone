@@ -1,5 +1,7 @@
 import { humanPercInd } from '../../Assets/models/humanPerception';
 import { uvIndexes } from '../../Assets/models/uvIndexes';
+// { key: 3, value:0, title:'3', label: 'Air Quality:', check: true, link:'https://en.wikipedia.org/wiki/Air_quality_index', unit: 'low'},
+
 export const currDataCards = [
     {
       key: 0,

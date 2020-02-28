@@ -54,7 +54,6 @@ export default function CurrData() {
   const [init, setInit] = useState(true);
   const [timeStamp, updateTime] = useState('');
   const classes = useStyles();
-  // { key: 3, value:0, title:'3', label: 'Air Quality:', check: true, link:'https://en.wikipedia.org/wiki/Air_quality_index', unit: 'low'},
 
   const [chipData, setChipData] = useState(currDataCards);
 
